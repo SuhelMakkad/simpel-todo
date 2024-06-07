@@ -1,11 +1,11 @@
 export const STATUS = {
-  DONE: "done",
   IN_PROGRESS: "in-progress",
+  DONE: "done",
 };
 
 export const STATUS_LABEL = {
-  [STATUS.DONE]: "Done",
   [STATUS.IN_PROGRESS]: "In Progress",
+  [STATUS.DONE]: "Done",
 };
 
 export const STATUS_OPTIONS = Object.keys(STATUS_LABEL).reduce((acc, key) => {

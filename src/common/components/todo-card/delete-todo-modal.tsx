@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 
-const DeleteTodoModal = () => {
+export const DeleteTodoModal = () => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -38,5 +38,3 @@ const DeleteTodoModal = () => {
     </AlertDialog>
   );
 };
-
-export default DeleteTodoModal;

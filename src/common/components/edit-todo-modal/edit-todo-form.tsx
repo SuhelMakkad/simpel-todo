@@ -26,11 +26,16 @@ import { DialogFooter } from "@/components/ui/dialog";
 
 import { STATUS, STATUS_OPTIONS } from "@/utils/constant";
 
-type EditTodoFormProps = {
-  title: string;
-  description: string;
-  status: string;
-};
+export type EditTodoFormProps =
+  | {
+      title: string;
+      description: string;
+      status: string;
+      isNew?: false;
+    }
+  | {
+      isNew: true;
+    };
 
 const editFormSchema = z.object({
   title: z
@@ -53,14 +58,18 @@ const editFormSchema = z.object({
   }),
 });
 
+const defaultValues = {
+  title: "",
+  description: "",
+  status: STATUS.IN_PROGRESS,
+};
+
 type EditFormSchema = z.infer<typeof editFormSchema>;
 
-const EditTodoForm = (props: EditTodoFormProps) => {
+export const EditTodoForm = (props: EditTodoFormProps) => {
   const form = useForm<EditFormSchema>({
     resolver: zodResolver(editFormSchema),
-    defaultValues: {
-      ...props,
-    },
+    defaultValues: { ...(props.isNew ? defaultValues : props) },
   });
 
   function onSubmit(values: EditFormSchema) {
@@ -130,5 +139,3 @@ const EditTodoForm = (props: EditTodoFormProps) => {
     </Form>
   );
 };
-
-export default EditTodoForm;

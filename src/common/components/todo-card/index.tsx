@@ -1,11 +1,13 @@
+import { FilePenIcon } from "lucide-react";
+
 import { CardContent } from "@/components/ui/card";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { STATUS_LABEL } from "@/utils/constant";
+import { EditTodoModal } from "@/components/edit-todo-modal";
+import { Button } from "@/components/ui/button";
+import { DeleteTodoModal } from "./delete-todo-modal";
 
-import { EditTodoModal } from "./edit-todo-modal";
-import DeleteTodoModal from "./delete-todo-modal";
+import { STATUS_LABEL } from "@/utils/constant";
 
 type TodoCardProps = {
   title: string;
@@ -29,7 +31,12 @@ export const TodoCard = ({ title, description, status }: TodoCardProps) => {
             {STATUS_LABEL[status]}
           </Badge>
 
-          <EditTodoModal title={title} description={description} status={status} />
+          <EditTodoModal title={title} description={description} status={status}>
+            <Button variant="ghost" size="icon" className="h-8 w-8">
+              <FilePenIcon className="h-4 w-4" />
+              <span className="sr-only">Edit</span>
+            </Button>
+          </EditTodoModal>
 
           <DeleteTodoModal />
         </div>
