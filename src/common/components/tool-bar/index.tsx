@@ -1,11 +1,11 @@
 import { AddTodo } from "./add-todo-btn";
 import { FilterTodo } from "./filter-todo";
-import { TodoSearch } from "./todo-search";
+import { SearchTodo } from "./search-todo";
 
 export const ToolBar = () => {
   return (
     <div className="flex gap-3 items-center">
-      <TodoSearch />
+      <SearchTodo />
       <FilterTodo />
       <AddTodo />
     </div>
