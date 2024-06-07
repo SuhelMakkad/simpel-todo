@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useFilterQuery } from "@/hooks/use-filter-query";
+import { useQuerySearchParams } from "@/hooks/use-query-search-params";
 
 import { FilterIcon } from "lucide-react";
 import {
@@ -23,7 +23,7 @@ const statusOptions = Object.keys(STATUS_LABEL).reduce((acc, key) => {
 }, [] as { label: string; value: string }[]);
 
 export const FilterTodo = () => {
-  const { status, updateStatus } = useFilterQuery();
+  const { status, updateStatus } = useQuerySearchParams();
   const [selectedFilters, setSelectedFilters] = useState<string[]>(status);
 
   const handleDropdownSelect = (value: string) => {

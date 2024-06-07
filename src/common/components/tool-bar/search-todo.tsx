@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { useFilterQuery } from "@/hooks/use-filter-query";
+import { useQuerySearchParams } from "@/hooks/use-query-search-params";
+
 import { Input } from "@/components/ui/input";
 
 export const SearchTodo = () => {
-  const { search, updateSearch } = useFilterQuery();
+  const { search, updateSearch } = useQuerySearchParams();
   const [searchText, setSearchText] = useState(search);
 
   useEffect(() => {

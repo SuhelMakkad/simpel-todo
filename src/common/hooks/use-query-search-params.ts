@@ -4,7 +4,7 @@ import { useMemo } from "react";
 const SEARCH_TEXT_KEY = "search";
 const STATUS_KEY = "status";
 
-export const useFilterQuery = () => {
+export const useQuerySearchParams = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
