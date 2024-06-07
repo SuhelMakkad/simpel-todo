@@ -21,6 +21,7 @@
       "@/components/*": ["./src/common/components/*"],
       "@/hooks/*": ["./src/common/hooks/*"],
       "@/utils/*": ["./src/common/utils/*"],
+      "@/styles/*": ["./src/common/styles/*"],
       "@/*": ["./src/*"]
     }
   },

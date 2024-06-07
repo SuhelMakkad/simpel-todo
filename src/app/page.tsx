@@ -1,3 +1,9 @@
+import { ThemeSwitch } from "@/components/theme/theme-switch";
+
 export default function Home() {
-  return <main>hi</main>;
+  return (
+    <main>
+      <ThemeSwitch />
+    </main>
+  );
 }
