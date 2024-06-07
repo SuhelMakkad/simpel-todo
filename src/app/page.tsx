@@ -81,10 +81,12 @@ const todo = [
 
 export default function Home() {
   return (
-    <main className="container my-4">
+    <main className="container my-4 flex flex-col gap-4">
+      <h1 className="text-2xl font-medium my-2">Todo List</h1>
+
       <ToolBar />
 
-      <div className="grid grid-cols-1 gap-4 mt-4">
+      <div className="grid grid-cols-1 gap-4">
         {todo.map((item, index) => (
           <TodoCard key={index} {...item} />
         ))}
