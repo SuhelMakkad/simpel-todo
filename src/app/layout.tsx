@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 
 import { ThemeProvider } from "@/components/theme/theme-provider.tsx";
+import { NavBar } from "@/components/nav-bar";
 
 import "@/styles/globals.css";
 
@@ -26,6 +27,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <NavBar />
+
           {children}
         </ThemeProvider>
       </body>
