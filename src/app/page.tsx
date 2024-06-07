@@ -1,4 +1,5 @@
 import { TodoCard } from "@/components/todo-card";
+import { ToolBar } from "@/components/tool-bar";
 
 const todo = [
   {
@@ -81,6 +82,8 @@ const todo = [
 export default function Home() {
   return (
     <main className="container my-4">
+      <ToolBar />
+
       <div className="grid grid-cols-1 gap-4 mt-4">
         {todo.map((item, index) => (
           <TodoCard key={index} {...item} />
