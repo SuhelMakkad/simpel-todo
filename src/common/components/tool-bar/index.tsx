@@ -1,3 +1,5 @@
+"use client";
+
 import { AddTodo } from "./add-todo-btn";
 import { FilterTodo } from "./filter-todo";
 import { SearchTodo } from "./search-todo";

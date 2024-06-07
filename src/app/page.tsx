@@ -86,7 +86,7 @@ export default function Home() {
 
       <ToolBar />
 
-      <div className="grid grid-cols-1 gap-4">
+      <div className="flex flex-col gap-4">
         {todo.map((item, index) => (
           <TodoCard key={index} {...item} />
         ))}
