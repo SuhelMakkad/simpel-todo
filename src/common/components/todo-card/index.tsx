@@ -4,7 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { STATUS_LABEL } from "@/utils/constant";
 
-import { FilePenIcon } from "lucide-react";
+import { EditTodoModal } from "./edit-todo-modal";
+
+import { Trash } from "lucide-react";
 
 type TodoCardProps = {
   title: string;
@@ -23,12 +25,16 @@ export const TodoCard = ({ title, description, status }: TodoCardProps) => {
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          <Badge variant="outline">{STATUS_LABEL[status]}</Badge>
+        <div className="flex items-center">
+          <Badge variant="outline" className="mr-2">
+            {STATUS_LABEL[status]}
+          </Badge>
+
+          <EditTodoModal title={title} description={description} status={status} />
 
           <Button variant="ghost" size="icon" className="h-8 w-8">
-            <FilePenIcon className="h-4 w-4" />
-            <span className="sr-only">Edit</span>
+            <Trash className="h-4 w-4" />
+            <span className="sr-only">Delete</span>
           </Button>
         </div>
       </CardContent>

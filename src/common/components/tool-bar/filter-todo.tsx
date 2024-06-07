@@ -12,15 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 
-import { STATUS_LABEL } from "@/utils/constant";
-
-const statusOptions = Object.keys(STATUS_LABEL).reduce((acc, key) => {
-  acc.push({
-    label: STATUS_LABEL[key],
-    value: key,
-  });
-  return acc;
-}, [] as { label: string; value: string }[]);
+import { STATUS_OPTIONS } from "@/utils/constant";
 
 export const FilterTodo = () => {
   const { status, updateStatus } = useQuerySearchParams();
@@ -49,7 +41,7 @@ export const FilterTodo = () => {
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel>Filter Tasks</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        {statusOptions.map((item) => (
+        {STATUS_OPTIONS.map((item) => (
           <DropdownMenuCheckboxItem
             key={item.value}
             checked={selectedFilters.includes(item.value)}

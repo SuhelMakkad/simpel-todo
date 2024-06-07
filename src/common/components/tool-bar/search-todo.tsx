@@ -22,7 +22,6 @@ export const SearchTodo = () => {
       placeholder="Search todo..."
       className="max-w-md"
       value={searchText}
-      defaultValue={search}
       onChange={(e) => {
         setSearchText(e.target.value);
       }}
