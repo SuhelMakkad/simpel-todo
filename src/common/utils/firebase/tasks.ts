@@ -14,7 +14,10 @@ import type { Task, TaskSchema } from "@/utils/types";
 export const addTask = (task: TaskSchema, uid: string) => {
   try {
     const tasksCollection = collection(db, `users/${uid}/tasks`);
-    return addDoc(tasksCollection, { ...task });
+    return addDoc(tasksCollection, {
+      ...task,
+      createdAt: new Date().toISOString(),
+    });
   } catch (e) {
     console.error("Error adding document: ", e);
   }
@@ -23,7 +26,14 @@ export const addTask = (task: TaskSchema, uid: string) => {
 export const updateTask = (task: TaskSchema, taskId: string, uid: string) => {
   try {
     const taskDoc = doc(db, `users/${uid}/tasks/${taskId}`);
-    return setDoc(taskDoc, task);
+    return setDoc(
+      taskDoc,
+      {
+        ...task,
+        updatedAt: new Date().toISOString(),
+      },
+      { merge: true }
+    );
   } catch (e) {
     console.error("Error updating document: ", e);
   }
@@ -49,6 +59,7 @@ export const getTasks = async (uid: string, filters: Filters = {}) => {
 
       if (filters.search) {
         queries.push(where("title", "==", filters.search));
+        queries.push(where("description", "==", filters.search));
       }
     }
 
@@ -67,3 +78,6 @@ export const getTasks = async (uid: string, filters: Filters = {}) => {
     return null;
   }
 };
+
+// title: Watch a documentary
+// description: Watch a documentary about space exploration on Netflix or YouTube to learn more about the universe.

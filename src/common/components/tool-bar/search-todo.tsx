@@ -22,12 +22,10 @@ export const SearchTodo = () => {
   return (
     <Input
       type="search"
-      placeholder="Search todo..."
+      placeholder="Search todo (exact)"
       className="max-w-md"
       value={searchText}
-      onChange={(e) => {
-        setSearchText(e.target.value);
-      }}
+      onChange={(e) => setSearchText(e.target.value)}
     />
   );
 };

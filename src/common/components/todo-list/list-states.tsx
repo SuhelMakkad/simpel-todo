@@ -11,7 +11,7 @@ export const LoadingState = () => {
 
 export const EmptyState = () => {
   const { search, status, resetFilters } = useQuerySearchParams();
-  const hasFilters = search || status?.length;
+  const hasFilters = !!(search || status?.length);
 
   return (
     <State>
