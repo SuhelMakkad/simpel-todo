@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 import {
   Dialog,
   DialogContent,
@@ -12,8 +16,10 @@ export const EditTodoModal = ({
   children,
   ...props
 }: React.PropsWithChildren<EditTodoFormProps>) => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -21,7 +27,7 @@ export const EditTodoModal = ({
           <DialogDescription>Make changes to the task details below</DialogDescription>
         </DialogHeader>
 
-        <EditTodoForm {...props} />
+        <EditTodoForm {...props} onSuccess={() => setOpen(false)} />
       </DialogContent>
     </Dialog>
   );

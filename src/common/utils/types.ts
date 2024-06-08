@@ -22,4 +22,6 @@ export const taskSchema = z.object({
   }),
 });
 
-export type Task = z.infer<typeof taskSchema>;
+export type TaskSchema = z.infer<typeof taskSchema>;
+
+export type Task = TaskSchema & { id: string };

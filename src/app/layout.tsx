@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 
 import { ThemeProvider } from "@/components/theme/theme-provider.tsx";
 import { NavBar } from "@/components/nav-bar";
+import { Toaster } from "@/components/ui/sonner";
 
 import "@/styles/globals.css";
 import { AuthProvider } from "@/components/auth-provider";
@@ -33,6 +34,8 @@ export default function RootLayout({
 
             {children}
           </ThemeProvider>
+
+          <Toaster />
         </AuthProvider>
       </body>
     </html>

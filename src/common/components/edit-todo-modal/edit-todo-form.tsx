@@ -1,8 +1,8 @@
 "use client";
 
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 import {
   Form,
@@ -24,8 +24,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
 
-import { taskSchema, type Task } from "@/utils/types";
+import { taskSchema, type TaskSchema } from "@/utils/types";
 import { STATUS, STATUS_OPTIONS } from "@/utils/constant";
+import { addTask, updateTask } from "@/utils/firebase/tasks";
+import { useAuth } from "../auth-provider";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 export type EditTodoFormProps =
   | {
@@ -33,9 +37,11 @@ export type EditTodoFormProps =
       description: string;
       status: string;
       isNew?: false;
+      onSuccess?: () => void;
     }
   | {
       isNew: true;
+      onSuccess?: () => void;
     };
 
 const defaultValues = {
@@ -44,15 +50,33 @@ const defaultValues = {
   status: STATUS.IN_PROGRESS,
 };
 
-export const EditTodoForm = (props: EditTodoFormProps) => {
-  const form = useForm<Task>({
+export const EditTodoForm = ({ isNew, onSuccess, ...props }: EditTodoFormProps) => {
+  const { user } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const form = useForm<TaskSchema>({
     resolver: zodResolver(taskSchema),
-    defaultValues: { ...(props.isNew ? defaultValues : props) },
+    defaultValues: { ...(isNew ? defaultValues : props) },
   });
 
-  function onSubmit(values: Task) {
-    console.log(values);
-  }
+  const onSubmit = async (values: TaskSchema) => {
+    if (!user) return;
+    setIsLoading(true);
+
+    try {
+      const res = await (isNew ? addTask(values, user.uid) : updateTask(values, "", user.uid));
+      toast("Task saved successfully", {
+        description: `Task with title "${values.title}" has been saved`,
+      });
+      onSuccess?.();
+    } catch (e) {
+      console.error(e);
+      toast("Error saving task", {
+        description: "An error occurred while saving the task",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Form {...form}>
@@ -111,7 +135,10 @@ export const EditTodoForm = (props: EditTodoFormProps) => {
         />
 
         <DialogFooter>
-          <Button type="submit">Save changes</Button>
+          <Button type="submit" disabled={isLoading}>
+            {isLoading && <Loader2 className="animate-spin w-4 h-4 mr-2" />}
+            Save changes
+          </Button>
         </DialogFooter>
       </form>
     </Form>
