@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,6 +17,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 import { Button } from "@/components/ui/button";
+
+import { loginWithEmail } from "@/utils/firebase/auth";
+import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
   email: z
@@ -37,16 +42,23 @@ const defaultValues: LoginFormValues = {
 };
 
 export const LoginForm = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: { ...defaultValues },
   });
 
-  function onSubmit(values: LoginFormValues) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  const onSubmit = async (values: LoginFormValues) => {
+    setIsLoading(true);
+
+    try {
+      await loginWithEmail(values.email, values.password);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Form {...form}>
@@ -79,7 +91,8 @@ export const LoginForm = () => {
           )}
         />
 
-        <Button type="submit" size="sm" className="w-full">
+        <Button type="submit" size="sm" className="w-full" disabled={isLoading}>
+          {isLoading && <Loader2 className="animate-spin mr-2 w-4 h-4" />}
           Submit
         </Button>
       </form>
