@@ -21,19 +21,19 @@ export const TodoCard = ({ id, title, description, status }: Task) => {
           </div>
         </div>
 
-        <div className="flex items-center">
-          <Badge variant="outline" className="mr-2">
-            {STATUS_LABEL[status]}
-          </Badge>
+        <div className="flex md:flex-row flex-col justify-between items-center md:gap-2 gap-4">
+          <Badge variant="outline">{STATUS_LABEL[status]}</Badge>
 
-          <EditTodoModal taskId={id} title={title} description={description} status={status}>
-            <Button variant="ghost" size="icon" className="h-8 w-8">
-              <FilePenIcon className="h-4 w-4" />
-              <span className="sr-only">Edit</span>
-            </Button>
-          </EditTodoModal>
+          <div className="flex items-center">
+            <EditTodoModal taskId={id} title={title} description={description} status={status}>
+              <Button variant="ghost" size="icon" className="h-8 w-8">
+                <FilePenIcon className="h-4 w-4" />
+                <span className="sr-only">Edit</span>
+              </Button>
+            </EditTodoModal>
 
-          <DeleteTodoModal taskId={id} />
+            <DeleteTodoModal taskId={id} />
+          </div>
         </div>
       </CardContent>
     </Card>
