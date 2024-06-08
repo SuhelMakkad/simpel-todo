@@ -32,8 +32,6 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
     return () => unSub();
   }, [user, router]);
 
-  console.log({ user });
-
   return <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>;
 };
 
