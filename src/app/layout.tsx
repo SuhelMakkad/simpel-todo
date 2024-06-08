@@ -7,7 +7,7 @@ import { Toaster } from "@/components/ui/sonner";
 
 import "@/styles/globals.css";
 import { AuthProvider } from "@/components/auth-provider";
-import { QueryProvider } from "@/common/query/query-provider";
+import { QueryProvider } from "@/query/query-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 

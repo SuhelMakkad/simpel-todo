@@ -1,8 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+
+import { refreshTaskList } from "@/query/use-tasks-query";
+import { useAuth } from "../auth-provider";
+import { Loader2 } from "lucide-react";
 
 import {
   Form,
@@ -27,9 +32,6 @@ import { DialogFooter } from "@/components/ui/dialog";
 import { taskSchema, type TaskSchema } from "@/utils/types";
 import { STATUS, STATUS_OPTIONS } from "@/utils/constant";
 import { addTask, updateTask } from "@/utils/firebase/tasks";
-import { useAuth } from "../auth-provider";
-import { useState } from "react";
-import { Loader2 } from "lucide-react";
 
 export type EditTodoFormProps =
   | {
@@ -76,6 +78,7 @@ export const EditTodoForm = ({ isNew, onSuccess, taskId, ...props }: EditTodoFor
         description: "An error occurred while saving the task",
       });
     } finally {
+      refreshTaskList(user.uid);
       setIsLoading(false);
     }
   };

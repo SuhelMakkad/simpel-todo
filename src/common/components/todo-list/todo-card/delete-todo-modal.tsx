@@ -1,8 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 
-import { Trash } from "lucide-react";
+import { toast } from "sonner";
+import { refreshTaskList } from "@/query/use-tasks-query";
+import { useAuth } from "@/components/auth-provider";
+import { Loader2, Trash } from "lucide-react";
 
 import {
   AlertDialog,
@@ -17,8 +20,6 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { deleteTask } from "@/utils/firebase/tasks";
-import { useAuth } from "@/components/auth-provider";
-import { toast } from "sonner";
 
 type DeleteTodoModalProps = {
   taskId: string;
@@ -29,9 +30,12 @@ export const DeleteTodoModal = ({ taskId }: DeleteTodoModalProps) => {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleDelete = async () => {
+  const handleDelete = async (e: FormEvent) => {
     if (!user) return;
 
+    e.preventDefault();
+
+    setOpen(true);
     setIsLoading(true);
 
     try {
@@ -41,8 +45,9 @@ export const DeleteTodoModal = ({ taskId }: DeleteTodoModalProps) => {
       console.error("Error deleting document: ", e);
       toast("An error occurred while deleting the task");
     } finally {
-      setIsLoading(false);
       setOpen(false);
+      setIsLoading(false);
+      refreshTaskList(user.uid);
     }
   };
 
@@ -50,7 +55,10 @@ export const DeleteTodoModal = ({ taskId }: DeleteTodoModalProps) => {
     <AlertDialog
       open={open}
       onOpenChange={(state) => {
-        if (isLoading) return;
+        if (isLoading) {
+          setOpen(true);
+          return;
+        }
         setOpen(state);
       }}
     >
@@ -71,6 +79,7 @@ export const DeleteTodoModal = ({ taskId }: DeleteTodoModalProps) => {
         <AlertDialogFooter>
           <AlertDialogCancel disabled={isLoading}>Cancel</AlertDialogCancel>
           <AlertDialogAction disabled={isLoading} onClick={handleDelete}>
+            {isLoading && <Loader2 className="animate-spin w-4 h-4 mr-2" />}
             Continue
           </AlertDialogAction>
         </AlertDialogFooter>

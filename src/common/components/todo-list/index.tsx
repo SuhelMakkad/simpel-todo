@@ -5,7 +5,7 @@ import { useAuth } from "@/components/auth-provider";
 import { TodoCard } from "./todo-card";
 import { EmptyState, ErrorState, LoadingState } from "./list-states";
 
-import { useTasksQuery } from "@/common/query/use-tasks-query";
+import { useTasksQuery } from "@/query/use-tasks-query";
 
 export const TodoList = () => {
   const { user } = useAuth();
