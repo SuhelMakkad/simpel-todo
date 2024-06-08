@@ -15,3 +15,8 @@ export const STATUS_OPTIONS = Object.keys(STATUS_LABEL).reduce((acc, key) => {
   });
   return acc;
 }, [] as { label: string; value: string }[]);
+
+export const routes = {
+  home: "/",
+  login: "/login",
+};
