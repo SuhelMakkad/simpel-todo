@@ -1,4 +1,13 @@
-import { collection, addDoc, setDoc, deleteDoc, getDocs, doc, query } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  setDoc,
+  deleteDoc,
+  getDocs,
+  doc,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "@/utils/firebase";
 import type { Task, TaskSchema } from "@/utils/types";
 
@@ -20,10 +29,32 @@ export const updateTask = (task: TaskSchema, taskId: string, uid: string) => {
   }
 };
 
-export const getTasks = async (uid: string) => {
+export const deleteTask = (taskId: string, uid: string) => {
+  const taskDoc = doc(db, `users/${uid}/tasks/${taskId}`);
+  return deleteDoc(taskDoc);
+};
+
+export type Filters = {
+  status?: string[];
+  search?: string;
+};
+
+export const getTasks = async (uid: string, filters: Filters = {}) => {
   try {
+    const queries = [];
+    if (filters) {
+      if (filters.status?.length) {
+        queries.push(where("status", "in", filters.status));
+      }
+
+      if (filters.search) {
+        queries.push(where("title", "==", filters.search));
+      }
+    }
+
     const tasksCollection = collection(db, `users/${uid}/tasks`);
-    const q = query(tasksCollection);
+    const q = query(tasksCollection, ...queries);
+
     const snapshot = await getDocs(q);
 
     if (snapshot.empty) {
@@ -35,9 +66,4 @@ export const getTasks = async (uid: string) => {
     console.error("Error getting documents: ", e);
     return null;
   }
-};
-
-export const deleteTask = (taskId: string, uid: string) => {
-  const taskDoc = doc(db, `users/${uid}/tasks/${taskId}`);
-  return deleteDoc(taskDoc);
 };

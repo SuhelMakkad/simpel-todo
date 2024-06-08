@@ -6,10 +6,12 @@ import { TodoCard } from "./todo-card";
 import { EmptyState, ErrorState, LoadingState } from "./list-states";
 
 import { useTasksQuery } from "@/query/use-tasks-query";
+import { useQuerySearchParams } from "@/hooks/use-query-search-params";
 
 export const TodoList = () => {
   const { user } = useAuth();
-  const { data: tasks } = useTasksQuery(user?.uid);
+  const { search, status } = useQuerySearchParams();
+  const { data: tasks } = useTasksQuery(user?.uid, { search, status });
 
   if (tasks === undefined) return <LoadingState />;
   if (tasks === null) return <ErrorState />;
