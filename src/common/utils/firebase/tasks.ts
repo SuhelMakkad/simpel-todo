@@ -1,4 +1,4 @@
-import { collection, addDoc, setDoc, doc, getDocs, query, where } from "firebase/firestore";
+import { collection, addDoc, setDoc, deleteDoc, getDocs, doc, query } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 import type { Task, TaskSchema } from "@/utils/types";
 
@@ -34,5 +34,14 @@ export const getTasks = async (uid: string) => {
   } catch (e) {
     console.error("Error getting documents: ", e);
     return null;
+  }
+};
+
+export const deleteTask = (taskId: string, uid: string) => {
+  try {
+    const taskDoc = doc(db, `users/${uid}/tasks/${taskId}`);
+    return deleteDoc(taskDoc);
+  } catch (e) {
+    console.error("Error deleting document: ", e);
   }
 };

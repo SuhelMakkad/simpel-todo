@@ -33,7 +33,7 @@ export const TodoCard = ({ id, title, description, status }: Task) => {
             </Button>
           </EditTodoModal>
 
-          <DeleteTodoModal />
+          <DeleteTodoModal taskId={id} />
         </div>
       </CardContent>
     </Card>
