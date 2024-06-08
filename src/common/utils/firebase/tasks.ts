@@ -7,6 +7,7 @@ import {
   doc,
   query,
   where,
+  or,
 } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 import type { Task, TaskSchema } from "@/utils/types";
@@ -64,7 +65,7 @@ export const getTasks = async (uid: string, filters: Filters = {}) => {
     }
 
     const tasksCollection = collection(db, `users/${uid}/tasks`);
-    const q = query(tasksCollection, ...queries);
+    const q = query(tasksCollection, or(...queries));
 
     const snapshot = await getDocs(q);
 
@@ -78,6 +79,3 @@ export const getTasks = async (uid: string, filters: Filters = {}) => {
     return null;
   }
 };
-
-// title: Watch a documentary
-// description: Watch a documentary about space exploration on Netflix or YouTube to learn more about the universe.
