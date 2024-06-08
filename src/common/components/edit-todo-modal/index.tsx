@@ -23,8 +23,12 @@ export const EditTodoModal = ({
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit Task</DialogTitle>
-          <DialogDescription>Make changes to the task details below</DialogDescription>
+          <DialogTitle>{props.isNew ? "Create New Task" : "Edit Task"}</DialogTitle>
+          <DialogDescription>
+            {props.isNew
+              ? "Fill in the details below to create a new task"
+              : "Make changes to the task details below"}
+          </DialogDescription>
         </DialogHeader>
 
         <EditTodoForm {...props} onSuccess={() => setOpen(false)} />
