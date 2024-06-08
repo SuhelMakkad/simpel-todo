@@ -8,14 +8,9 @@ import { Button } from "@/components/ui/button";
 import { DeleteTodoModal } from "./delete-todo-modal";
 
 import { STATUS_LABEL } from "@/utils/constant";
+import type { Task } from "@/utils/types";
 
-type TodoCardProps = {
-  title: string;
-  description: string;
-  status: string;
-};
-
-export const TodoCard = ({ title, description, status }: TodoCardProps) => {
+export const TodoCard = ({ id, title, description, status }: Task) => {
   return (
     <Card>
       <CardContent className="grid grid-cols-[1fr_auto] items-center gap-4 p-4">
@@ -31,7 +26,7 @@ export const TodoCard = ({ title, description, status }: TodoCardProps) => {
             {STATUS_LABEL[status]}
           </Badge>
 
-          <EditTodoModal title={title} description={description} status={status}>
+          <EditTodoModal taskId={id} title={title} description={description} status={status}>
             <Button variant="ghost" size="icon" className="h-8 w-8">
               <FilePenIcon className="h-4 w-4" />
               <span className="sr-only">Edit</span>

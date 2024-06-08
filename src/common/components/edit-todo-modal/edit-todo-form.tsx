@@ -33,6 +33,7 @@ import { Loader2 } from "lucide-react";
 
 export type EditTodoFormProps =
   | {
+      taskId: string;
       title: string;
       description: string;
       status: string;
@@ -40,6 +41,7 @@ export type EditTodoFormProps =
       onSuccess?: () => void;
     }
   | {
+      taskId?: undefined;
       isNew: true;
       onSuccess?: () => void;
     };
@@ -50,7 +52,7 @@ const defaultValues = {
   status: STATUS.IN_PROGRESS,
 };
 
-export const EditTodoForm = ({ isNew, onSuccess, ...props }: EditTodoFormProps) => {
+export const EditTodoForm = ({ isNew, onSuccess, taskId, ...props }: EditTodoFormProps) => {
   const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const form = useForm<TaskSchema>({
@@ -63,7 +65,7 @@ export const EditTodoForm = ({ isNew, onSuccess, ...props }: EditTodoFormProps) 
     setIsLoading(true);
 
     try {
-      const res = await (isNew ? addTask(values, user.uid) : updateTask(values, "", user.uid));
+      const res = await (isNew ? addTask(values, user.uid) : updateTask(values, taskId, user.uid));
       toast("Task saved successfully", {
         description: `Task with title "${values.title}" has been saved`,
       });
