@@ -1,3 +1,8 @@
+"use client";
+
+import { LogOut } from "lucide-react";
+import { useAuth } from "@/components/auth-provider";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -5,23 +10,28 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { LogOut, User } from "lucide-react";
+
+import { getInitials } from "@/utils/index";
+import { logOut } from "@/utils/firebase/auth";
 
 export const ProfileAvatar = () => {
+  const { user } = useAuth();
+
+  if (!user) {
+    return <div className="h-8 w-8" />;
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-          <AvatarFallback>CN</AvatarFallback>
+        <Avatar className="h-8 w-8">
+          <AvatarImage src={user.photoURL!} alt="@shadcn" />
+          <AvatarFallback>{getInitials(user.displayName!)}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem>
-          <User className="w-4 h-4 mr-2" />
-          Profile
-        </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem>{user.displayName}</DropdownMenuItem>
+        <DropdownMenuItem onClick={logOut}>
           <LogOut className="w-4 h-4 mr-2" />
           Logout
         </DropdownMenuItem>
