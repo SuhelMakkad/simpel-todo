@@ -6,15 +6,16 @@ import { onAuthStateChanged, type User } from "firebase/auth";
 
 import { routes } from "@/utils/constant";
 import { auth } from "@/utils/firebase";
+import { LoadingState } from "./loading-state";
 
 type AuthContextType = {
-  user: User | null;
+  user: User | null | undefined;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: React.PropsWithChildren) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null | undefined>();
   const router = useRouter();
 
   useEffect(() => {
@@ -32,7 +33,11 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
     return () => unSub();
   }, [user, router]);
 
-  return <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ user }}>
+      {user === undefined ? <LoadingState /> : children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuth = () => {
