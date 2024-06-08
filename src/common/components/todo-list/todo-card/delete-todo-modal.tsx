@@ -26,8 +26,8 @@ type DeleteTodoModalProps = {
 
 export const DeleteTodoModal = ({ taskId }: DeleteTodoModalProps) => {
   const { user } = useAuth();
-  const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleDelete = async () => {
     if (!user) return;
@@ -45,8 +45,6 @@ export const DeleteTodoModal = ({ taskId }: DeleteTodoModalProps) => {
       setOpen(false);
     }
   };
-
-  console.log({ isLoading });
 
   return (
     <AlertDialog

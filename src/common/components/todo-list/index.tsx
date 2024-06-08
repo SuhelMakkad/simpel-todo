@@ -1,23 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { useAuth } from "@/components/auth-provider";
 
 import { TodoCard } from "./todo-card";
 import { EmptyState, ErrorState, LoadingState } from "./list-states";
-import { getTasks } from "@/utils/firebase/tasks";
 
-import type { Task } from "@/utils/types";
+import { useTasksQuery } from "@/common/query/use-tasks-query";
 
 export const TodoList = () => {
   const { user } = useAuth();
-  const [tasks, setTasks] = useState<Task[] | null | undefined>(undefined);
-
-  useEffect(() => {
-    if (!user) return;
-
-    getTasks(user.uid).then((data) => setTasks(data));
-  }, [user]);
+  const { data: tasks } = useTasksQuery(user?.uid);
 
   if (tasks === undefined) return <LoadingState />;
   if (tasks === null) return <ErrorState />;

@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/sonner";
 
 import "@/styles/globals.css";
 import { AuthProvider } from "@/components/auth-provider";
+import { QueryProvider } from "@/common/query/query-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,20 +24,22 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-background text-primary antialiased`}>
-        <AuthProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <NavBar />
+        <QueryProvider>
+          <AuthProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <NavBar />
 
-            {children}
-          </ThemeProvider>
+              {children}
 
-          <Toaster />
-        </AuthProvider>
+              <Toaster />
+            </ThemeProvider>
+          </AuthProvider>
+        </QueryProvider>
       </body>
     </html>
   );

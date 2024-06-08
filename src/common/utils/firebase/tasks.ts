@@ -38,10 +38,6 @@ export const getTasks = async (uid: string) => {
 };
 
 export const deleteTask = (taskId: string, uid: string) => {
-  try {
-    const taskDoc = doc(db, `users/${uid}/tasks/${taskId}`);
-    return deleteDoc(taskDoc);
-  } catch (e) {
-    console.error("Error deleting document: ", e);
-  }
+  const taskDoc = doc(db, `users/${uid}/tasks/${taskId}`);
+  return deleteDoc(taskDoc);
 };
