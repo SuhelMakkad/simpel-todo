@@ -14,10 +14,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getInitials } from "@/utils/index";
 import { logOut } from "@/utils/firebase/auth";
 
+import { DummyDataLink } from "./dummy-data-link";
+
 export const ProfileAvatar = () => {
   const { user } = useAuth();
+
   if (!user) {
-    return <div className="h-8 w-8" />;
+    return <DummyDataLink />;
   }
 
   const userTitle = user.displayName || user.email!;

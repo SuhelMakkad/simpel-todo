@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { ThemeSwitch } from "@/components/theme/theme-switch";
-import { ProfileAvatar } from "@/components/profile-avatar";
+import { ProfileAvatar } from "./profile-avatar";
 
 import { routes } from "@/utils/constant";
 

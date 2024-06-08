@@ -36,16 +36,25 @@ const formSchema = z.object({
 
 type LoginFormValues = z.infer<typeof formSchema>;
 
+type LoginFormProps = {
+  loadDummyData: boolean;
+};
+
 const defaultValues: LoginFormValues = {
   email: "",
   password: "",
 };
 
-export const LoginForm = () => {
+const dummyData = {
+  email: "test@email.com",
+  password: "password",
+};
+
+export const LoginForm = ({ loadDummyData }: LoginFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: { ...defaultValues },
+    defaultValues: { ...(loadDummyData ? dummyData : defaultValues) },
   });
 
   const onSubmit = async (values: LoginFormValues) => {
