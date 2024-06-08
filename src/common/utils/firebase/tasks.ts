@@ -1,8 +1,8 @@
-import { collection, addDoc, setDoc, doc } from "firebase/firestore";
+import { collection, addDoc, setDoc, doc, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/utils/firebase";
-import type { TaskSchema } from "@/utils/types";
+import type { Task, TaskSchema } from "@/utils/types";
 
-export const addTask = async (task: TaskSchema, uid: string) => {
+export const addTask = (task: TaskSchema, uid: string) => {
   try {
     const tasksCollection = collection(db, `users/${uid}/tasks`);
     return addDoc(tasksCollection, { ...task });
@@ -11,11 +11,28 @@ export const addTask = async (task: TaskSchema, uid: string) => {
   }
 };
 
-export const updateTask = async (task: TaskSchema, taskId: string, uid: string) => {
+export const updateTask = (task: TaskSchema, taskId: string, uid: string) => {
   try {
-    const taskDoc = doc(db, `users/${uid}/tasks`, taskId);
+    const taskDoc = doc(db, `users/${uid}/tasks/${taskId}`);
     return setDoc(taskDoc, task);
   } catch (e) {
     console.error("Error updating document: ", e);
+  }
+};
+
+export const getTasks = async (uid: string) => {
+  try {
+    const tasksCollection = collection(db, `users/${uid}/tasks`);
+    const q = query(tasksCollection);
+    const snapshot = await getDocs(q);
+
+    if (snapshot.empty) {
+      return [];
+    }
+
+    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as Task[];
+  } catch (e) {
+    console.error("Error getting documents: ", e);
+    return null;
   }
 };
