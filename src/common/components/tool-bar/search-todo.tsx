@@ -8,13 +8,16 @@ export const SearchTodo = () => {
   const [searchText, setSearchText] = useState(search);
 
   useEffect(() => {
-    // debounce the search
     const timeout = setTimeout(() => {
       updateSearch(searchText);
     }, 250);
 
     return () => clearTimeout(timeout);
   }, [searchText]);
+
+  useEffect(() => {
+    setSearchText(search);
+  }, [search]);
 
   return (
     <Input

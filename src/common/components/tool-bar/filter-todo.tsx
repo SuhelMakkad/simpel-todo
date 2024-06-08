@@ -30,6 +30,10 @@ export const FilterTodo = () => {
     updateStatus(selectedFilters);
   }, [selectedFilters]);
 
+  useEffect(() => {
+    setSelectedFilters(status);
+  }, [status]);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

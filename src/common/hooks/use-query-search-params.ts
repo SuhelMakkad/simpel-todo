@@ -1,5 +1,5 @@
-import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const SEARCH_TEXT_KEY = "search";
 const STATUS_KEY = "status";
@@ -24,6 +24,14 @@ export const useQuerySearchParams = () => {
     router.replace(`?${newSearchParams.toString()}`);
   };
 
+  const resetFilters = () => {
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    newSearchParams.delete(SEARCH_TEXT_KEY);
+    newSearchParams.delete(STATUS_KEY);
+
+    router.replace("/");
+  };
+
   const { search, status } = useMemo(() => {
     return {
       search: searchParams.get(SEARCH_TEXT_KEY) || "",
@@ -31,5 +39,5 @@ export const useQuerySearchParams = () => {
     };
   }, [searchParams.toString()]);
 
-  return { updateSearch, updateStatus, search, status };
+  return { search, status, updateSearch, updateStatus, resetFilters };
 };
