@@ -1,13 +1,15 @@
 import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 
+import { AuthProvider } from "@/components/auth-provider";
+import { QueryProvider } from "@/query/query-provider";
+
 import { ThemeProvider } from "@/components/theme/theme-provider.tsx";
 import { NavBar } from "@/components/nav-bar";
 import { Toaster } from "@/components/ui/sonner";
+import { BASE_PATH } from "@/utils/constant";
 
 import "@/styles/globals.css";
-import { AuthProvider } from "@/components/auth-provider";
-import { QueryProvider } from "@/query/query-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +25,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href={`${BASE_PATH}/favicon.ico`} />
+      </head>
       <body className={`${inter.className} bg-background text-primary antialiased`}>
         <QueryProvider>
           <ThemeProvider

@@ -20,3 +20,5 @@ export const routes = {
   home: "/",
   login: "/login",
 };
+
+export const BASE_PATH = process.env.BASE_PATH;
