@@ -5,7 +5,9 @@ import { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
 
+import { Loader2 } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -19,7 +21,6 @@ import { PasswordInput } from "@/components/ui/password-input";
 import { Button } from "@/components/ui/button";
 
 import { loginWithEmail } from "@/utils/firebase/auth";
-import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
   email: z
@@ -64,6 +65,7 @@ export const LoginForm = ({ loadDummyData }: LoginFormProps) => {
       await loginWithEmail(values.email, values.password);
     } catch (error) {
       console.error(error);
+      toast("Invalid credentials", { description: "Please check your email and password" });
     } finally {
       setIsLoading(false);
     }
