@@ -1,9 +1,14 @@
+"use client";
+
+import { useSearchParams } from "next/navigation";
+
 import { OrDivider } from "@/components/ui/or-divider";
 import { LoginForm } from "./login-form";
 import { GoogleLogin } from "./google-login";
 
-const SignInPage = ({ searchParams }: { searchParams: Record<string, string> }) => {
-  const { d } = searchParams;
+const SignInPage = () => {
+  const searchParams = useSearchParams();
+  const d = searchParams.get("d");
 
   return (
     <main className="container max-w-md space-y-6 my-8">
