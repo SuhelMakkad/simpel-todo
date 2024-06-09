@@ -51,7 +51,7 @@ export type EditTodoFormProps =
 const defaultValues = {
   title: "",
   description: "",
-  status: STATUS.IN_PROGRESS,
+  status: STATUS.TODO.value,
 };
 
 export const EditTodoForm = ({ isNew, onSuccess, taskId, ...props }: EditTodoFormProps) => {

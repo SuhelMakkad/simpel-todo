@@ -22,7 +22,14 @@ export const FilterTodo = () => {
     if (selectedFilters.includes(value)) {
       setSelectedFilters((prev) => prev.filter((filter) => filter !== value));
     } else {
-      setSelectedFilters((prev) => [...prev, value]);
+      setSelectedFilters((prev) => {
+        const newList = [...prev, value];
+        if (newList.length === STATUS_OPTIONS.length) {
+          return [];
+        }
+
+        return [...prev, value];
+      });
     }
   };
 
@@ -45,6 +52,13 @@ export const FilterTodo = () => {
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel>Filter Tasks</DropdownMenuLabel>
         <DropdownMenuSeparator />
+        <DropdownMenuCheckboxItem
+          checked={selectedFilters.length === 0}
+          onSelect={() => setSelectedFilters([])}
+        >
+          All
+        </DropdownMenuCheckboxItem>
+
         {STATUS_OPTIONS.map((item) => (
           <DropdownMenuCheckboxItem
             key={item.value}

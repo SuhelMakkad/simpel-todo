@@ -7,7 +7,7 @@ import { EditTodoModal } from "@/components/edit-todo-modal";
 import { Button } from "@/components/ui/button";
 import { DeleteTodoModal } from "./delete-todo-modal";
 
-import { STATUS_LABEL } from "@/utils/constant";
+import { STATUS_VALUE_LABEL } from "@/utils/constant";
 import type { Task } from "@/utils/types";
 
 export const TodoCard = ({ id, title, description, status }: Task) => {
@@ -22,7 +22,7 @@ export const TodoCard = ({ id, title, description, status }: Task) => {
         </div>
 
         <div className="flex md:flex-row flex-col justify-between items-center md:gap-2 gap-4">
-          <Badge variant="outline">{STATUS_LABEL[status]}</Badge>
+          <Badge variant="outline">{STATUS_VALUE_LABEL[status]}</Badge>
 
           <div className="flex items-center">
             <EditTodoModal taskId={id} title={title} description={description} status={status}>

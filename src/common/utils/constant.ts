@@ -1,20 +1,29 @@
-export const STATUS = {
-  IN_PROGRESS: "in-progress",
-  DONE: "done",
+export type TaskDetails = { value: string; label: string };
+
+export const STATUS: Record<string, TaskDetails> = {
+  TODO: {
+    value: "todo",
+    label: "Todo",
+  },
+  IN_PROGRESS: {
+    value: "in-progress",
+    label: "In Progress",
+  },
+  DONE: {
+    value: "done",
+    label: "Done",
+  },
 };
 
-export const STATUS_LABEL = {
-  [STATUS.IN_PROGRESS]: "In Progress",
-  [STATUS.DONE]: "Done",
-};
-
-export const STATUS_OPTIONS = Object.keys(STATUS_LABEL).reduce((acc, key) => {
-  acc.push({
-    label: STATUS_LABEL[key],
-    value: key,
-  });
+export const STATUS_OPTIONS = Object.values(STATUS).reduce((acc, key) => {
+  acc.push(key);
   return acc;
-}, [] as { label: string; value: string }[]);
+}, [] as TaskDetails[]);
+
+export const STATUS_VALUE_LABEL = Object.values(STATUS).reduce((acc, key) => {
+  acc[key.value] = key.label;
+  return acc;
+}, {} as Record<string, string>);
 
 export const routes = {
   home: "/",

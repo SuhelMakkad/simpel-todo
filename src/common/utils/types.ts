@@ -16,7 +16,7 @@ export const taskSchema = z.object({
     .trim()
     .min(1)
     .max(500),
-  status: z.enum(Object.values(STATUS) as [string, ...string[]], {
+  status: z.enum(Object.values(STATUS).map((status) => status.value) as [string, ...string[]], {
     invalid_type_error: "Invalid status type",
     message: "Status is required",
   }),
