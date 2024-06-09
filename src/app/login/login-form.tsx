@@ -47,7 +47,7 @@ const defaultValues: LoginFormValues = {
 
 const dummyData = {
   email: "test@email.com",
-  password: "password",
+  password: "pass@123!",
 };
 
 export const LoginForm = ({ loadDummyData }: LoginFormProps) => {
