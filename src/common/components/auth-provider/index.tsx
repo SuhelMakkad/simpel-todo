@@ -21,7 +21,6 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
   useEffect(() => {
     if (user === null) {
       router.push(routes.login);
-      return;
     }
 
     const unSub = onAuthStateChanged(auth, (user) => {
